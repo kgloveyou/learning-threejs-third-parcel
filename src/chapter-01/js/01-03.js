@@ -4,12 +4,18 @@ import * as THREE from 'three';
 let scene = new THREE.Scene();
 
 // create a camera, which defines where we're looking at.
-let camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
+let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 // create a render and set the size
 let renderer = new THREE.WebGLRenderer();
 renderer.setClearColor(new THREE.Color(0x000000));
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+
+createTree(scene);
+createHouse(scene);
+createGroundPlane(scene);
+createBoundingWall(scene);
 
 // // show axes in the screen
 // let axes = new THREE.AxesHelper(20);
@@ -17,7 +23,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 // create the ground plane
 let planeGeometry = new THREE.PlaneGeometry(60, 20);
-let planeMaterial = new THREE.MeshBasicMaterial({
+let planeMaterial = new THREE.MeshLambertMaterial({
   color: 0xAAAAAA,
 });
 let plane = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -28,14 +34,14 @@ plane.position.set(15, 0, 0);
 plane.receiveShadow = true;
 
 // add the plane to the scene
-scene.add(plane);
+// scene.add(plane);
 
 // create a cube
-let cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-let cubeMaterial = new THREE.MeshBasicMaterial({
+let BoxGeometry = new THREE.BoxGeometry(4, 4, 4);
+let cubeMaterial = new THREE.MeshLambertMaterial({
   color: 0xFF0000,
 });
-let cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+let cube = new THREE.Mesh(BoxGeometry, cubeMaterial);
 cube.castShadow = true;
 
 // position the cube
@@ -44,11 +50,11 @@ cube.position.y = 2;
 cube.position.z = 0;
 
 // add the cube to the scene
-scene.add(cube);
+// scene.add(cube);
 
 // create a sphere
 let sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
-let sphereMaterial = new THREE.MeshBasicMaterial({
+let sphereMaterial = new THREE.MeshLambertMaterial({
   color: 0x7777FF,
 });
 let sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
@@ -60,7 +66,7 @@ sphere.position.z = 2;
 sphere.castShadow = true;
 
 // add the sphere to the scene
-scene.add(sphere);
+// scene.add(sphere);
 
 // position and point the camera to the center of the scene
 camera.position.set(-30, 40, 30);
@@ -87,3 +93,97 @@ document.getElementById('webgl-output').appendChild(renderer.domElement);
 
 // render the scene
 renderer.render(scene, camera);
+
+function createTree(scene) {
+  let trunk = new THREE.BoxGeometry(1, 8, 1);
+  let leaves = new THREE.SphereGeometry(4);
+
+  // create the mesh
+  let trunkMesh = new THREE.Mesh(trunk, new THREE.MeshLambertMaterial({
+    color: 0x8b4513
+  }));
+  let leavesMesh = new THREE.Mesh(leaves, new THREE.MeshLambertMaterial({
+    color: 0x00ff00
+  }));
+
+  // position the trunk. Set y to half of height of trunk
+  trunkMesh.position.set(-10, 4, 0);
+  leavesMesh.position.set(-10, 12, 0);
+
+  trunkMesh.castShadow = true;
+  trunkMesh.receiveShadow = true;
+  leavesMesh.castShadow = true;
+  leavesMesh.receiveShadow = true;
+
+  scene.add(trunkMesh);
+  scene.add(leavesMesh);
+}
+
+function createBoundingWall(scene) {
+  let wallLeft = new THREE.BoxGeometry(70, 2, 2);
+  let wallRight = new THREE.BoxGeometry(70, 2, 2);
+  let wallTop = new THREE.BoxGeometry(2, 2, 50);
+  let wallBottom = new THREE.BoxGeometry(2, 2, 50);
+
+  let wallMaterial = new THREE.MeshLambertMaterial({
+    color: 0xa0522d
+  });
+
+  let wallLeftMesh = new THREE.Mesh(wallLeft, wallMaterial);
+  let wallRightMesh = new THREE.Mesh(wallRight, wallMaterial);
+  let wallTopMesh = new THREE.Mesh(wallTop, wallMaterial);
+  let wallBottomMesh = new THREE.Mesh(wallBottom, wallMaterial);
+
+  wallLeftMesh.position.set(15, 1, -25);
+  wallRightMesh.position.set(15, 1, 25);
+  wallTopMesh.position.set(-19, 1, 0);
+  wallBottomMesh.position.set(49, 1, 0);
+
+  scene.add(wallLeftMesh);
+  scene.add(wallRightMesh);
+  scene.add(wallBottomMesh);
+  scene.add(wallTopMesh);
+
+}
+
+function createGroundPlane(scene) {
+  // create the ground plane
+  let planeGeometry = new THREE.PlaneGeometry(70, 50);
+  let planeMaterial = new THREE.MeshLambertMaterial({
+    color: 0x9acd32
+  });
+  let plane = new THREE.Mesh(planeGeometry, planeMaterial);
+  plane.receiveShadow = true;
+
+  // rotate and position the plane
+  plane.rotation.x = -0.5 * Math.PI;
+  plane.position.x = 15;
+  plane.position.y = 0;
+  plane.position.z = 0;
+
+  scene.add(plane)
+}
+
+function createHouse(scene) {
+  let roof = new THREE.ConeGeometry(5, 4);
+  let base = new THREE.CylinderGeometry(5, 5, 6);
+
+  // create the mesh
+  let roofMesh = new THREE.Mesh(roof, new THREE.MeshLambertMaterial({
+    color: 0x8b7213
+  }));
+  let baseMesh = new THREE.Mesh(base, new THREE.MeshLambertMaterial({
+    color: 0xffe4c4
+  }));
+
+  roofMesh.position.set(25, 8, 0);
+  baseMesh.position.set(25, 3, 0);
+
+  roofMesh.receiveShadow = true;
+  baseMesh.receiveShadow = true;
+  roofMesh.castShadow = true;
+  baseMesh.castShadow = true;
+
+  scene.add(roofMesh);
+  scene.add(baseMesh);
+}
