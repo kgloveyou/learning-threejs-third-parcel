@@ -11,4 +11,5 @@ rewrite learning-threejs-third-editon with parcel
 ```
 ```json
 "dev": "parcel src/chapter-01/02-first-scene.html",
+"dev": "parcel src/chapter-01/03-materials-light.html",
 ```

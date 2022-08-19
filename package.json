@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel src/chapter-01/02-first-scene.html",
-    "build": "parcel src/chapter-01/02-first-scene.html"
+    "dev": "parcel src/chapter-01/03-materials-light.html",
+    "build": "parcel src/chapter-01/03-materials-light.html"
   },
   "author": "",
   "license": "ISC",
