@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import Stats  from 'three/examples/jsm/libs/stats.module';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js'
 
@@ -173,11 +174,11 @@ export var applyMeshNormalMaterial = function (geometry, material) {
 export function addDefaultCubeAndSphere(scene) {
 
     // create a cube
-    var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
+    var BoxGeometry = new THREE.BoxGeometry(4, 4, 4);
     var cubeMaterial = new THREE.MeshLambertMaterial({
         color: 0xff0000
     });
-    var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    var cube = new THREE.Mesh(BoxGeometry, cubeMaterial);
     cube.castShadow = true;
 
     // position the cube
@@ -277,10 +278,10 @@ export function addHouseAndTree(scene) {
     createTree(scene);
 
     function createBoundingWall(scene) {
-        var wallLeft = new THREE.CubeGeometry(70, 2, 2);
-        var wallRight = new THREE.CubeGeometry(70, 2, 2);
-        var wallTop = new THREE.CubeGeometry(2, 2, 50);
-        var wallBottom = new THREE.CubeGeometry(2, 2, 50);
+        var wallLeft = new THREE.BoxGeometry(70, 2, 2);
+        var wallRight = new THREE.BoxGeometry(70, 2, 2);
+        var wallTop = new THREE.BoxGeometry(2, 2, 50);
+        var wallBottom = new THREE.BoxGeometry(2, 2, 50);
 
         var wallMaterial = new THREE.MeshPhongMaterial({
             color: 0xa0522d
@@ -350,7 +351,7 @@ export function addHouseAndTree(scene) {
      * @param scene The scene to add the tree to
      */
     function createTree(scene) {
-        var trunk = new THREE.CubeGeometry(1, 8, 1);
+        var trunk = new THREE.BoxGeometry(1, 8, 1);
         var leaves = new THREE.SphereGeometry(4);
 
         // create the mesh
@@ -548,11 +549,11 @@ export function guiRemoveFolder(gui, folder) {
  */
 export function addMeshSelection(gui, controls, material, scene) {
     var sphereGeometry = new THREE.SphereGeometry(10, 20, 20);
-    var cubeGeometry = new THREE.BoxGeometry(16, 16, 15);
+    var BoxGeometry = new THREE.BoxGeometry(16, 16, 15);
     var planeGeometry = new THREE.PlaneGeometry(14, 14, 4, 4);
 
     var sphere = new THREE.Mesh(sphereGeometry, material);
-    var cube = new THREE.Mesh(cubeGeometry, material);
+    var cube = new THREE.Mesh(BoxGeometry, material);
     var plane = new THREE.Mesh(planeGeometry, material);
 
     sphere.position.x = 0;
