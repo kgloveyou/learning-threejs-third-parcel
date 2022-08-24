@@ -13,3 +13,6 @@ rewrite learning-threejs-third-editon with parcel
 "dev": "parcel src/chapter-01/02-first-scene.html",
 "dev": "parcel src/chapter-01/03-materials-light.html",
 ```
+
+## 注意
+请把assets文件夹复制到dist目录。
