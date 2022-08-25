@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel src/chapter-03/07-lensflares.html",
+    "dev": "parcel src/chapter-04/01-basic-mesh-material.html",
     "build": "parcel src/chapter-01/03-materials-light.html"
   },
   "author": "",

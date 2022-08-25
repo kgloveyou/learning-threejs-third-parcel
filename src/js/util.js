@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import Stats  from 'three/examples/jsm/libs/stats.module';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js'
+import { OBJLoader }  from 'three/examples/jsm/loaders/OBJLoader';
 
 /**
  * Initialize the statistics domelement
@@ -451,17 +452,17 @@ export function addBasicMaterialSettings(gui, controls, material, name) {
     folder.add(controls.material, 'name');
     folder.add(controls.material, 'opacity', 0, 1, 0.01);
     folder.add(controls.material, 'transparent');
-    folder.add(controls.material, 'overdraw', 0, 1, 0.01);
+    // folder.add(controls.material, 'overdraw', 0, 1, 0.01);
     folder.add(controls.material, 'visible');
     folder.add(controls.material, 'side', { FrontSide: 0, BackSide: 1, BothSides: 2 }).onChange(function (side) {
         controls.material.side = parseInt(side)
     });
 
     folder.add(controls.material, 'colorWrite');
-    folder.add(controls.material, 'flatShading').onChange(function (shading) {
-        controls.material.flatShading = shading;
-        controls.material.needsUpdate = true;
-    });
+    // folder.add(controls.material, 'flatShading').onChange(function (shading) {
+    //     controls.material.flatShading = shading;
+    //     controls.material.needsUpdate = true;
+    // });
     folder.add(controls.material, 'premultipliedAlpha');
     folder.add(controls.material, 'dithering');
     folder.add(controls.material, 'shadowSide', { FrontSide: 0, BackSide: 1, BothSides: 2 });
@@ -607,10 +608,10 @@ export function addMeshSelection(gui, controls, material, scene) {
  * @returns promise which is fullfilled once the goher is loaded
  */
 export function loadGopher(material) {
-    var loader = new THREE.OBJLoader();
+    var loader = new OBJLoader();
     var mesh = null;
     var p = new Promise(function (resolve) {
-        loader.load('../../assets/models/gopher/gopher.obj', function (loadedMesh) {
+        loader.load('/assets/models/gopher/gopher.obj', function (loadedMesh) {
             // this is a group of meshes, so iterate until we reach a THREE.Mesh
             mesh = loadedMesh;
             if (material) {
@@ -635,7 +636,7 @@ export function setMaterialGroup(material, group) {
 
 export function computeNormalsGroup(group) {
     if (group instanceof THREE.Mesh) {
-        var tempGeom = new THREE.Geometry();
+        var tempGeom = new THREE.BufferGeometry();
         tempGeom.fromBufferGeometry(group.geometry)
         tempGeom.computeFaceNormals();
         tempGeom.mergeVertices();
