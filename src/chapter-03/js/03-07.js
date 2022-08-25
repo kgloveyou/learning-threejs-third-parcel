@@ -5,9 +5,6 @@ import {
   initTrackballControls,
   initRenderer,
   initCamera,
-  addHouseAndTree,
-  addGroundPlane,
-  addDefaultCubeAndSphere,
 } from '../../js/util';
 import * as dat from 'dat.gui';
 
@@ -100,23 +97,22 @@ target.position.set(5, 0, 0);
 
 
 let pointColor = "#ffffff";
-//    let spotLight = new THREE.SpotLight( pointColor);
 let spotLight = new THREE.DirectionalLight(pointColor);
 spotLight.position.set(30, 10, -50);
 spotLight.castShadow = true;
-spotLight.shadowCameraNear = 0.1;
-spotLight.shadowCameraFar = 100;
-spotLight.shadowCameraFov = 50;
+spotLight.shadow.camera.near = 0.1;
+spotLight.shadow.camera.far = 100;
+spotLight.shadow.camera.fov = 50;
 spotLight.target = plane;
 spotLight.distance = 0;
-spotLight.shadowCameraNear = 2;
-spotLight.shadowCameraFar = 200;
-spotLight.shadowCameraLeft = -100;
-spotLight.shadowCameraRight = 100;
-spotLight.shadowCameraTop = 100;
-spotLight.shadowCameraBottom = -100;
-spotLight.shadowMapWidth = 2048;
-spotLight.shadowMapHeight = 2048;
+spotLight.shadow.camera.near = 2;
+spotLight.shadow.camera.far = 200;
+spotLight.shadow.camera.left = -100;
+spotLight.shadow.camera.right = 100;
+spotLight.shadow.camera.top = 100;
+spotLight.shadow.camera.bottom = -100;
+spotLight.shadow.mapSize.width = 2048;
+spotLight.shadow.mapSize.height = 2048;
 
 
 scene.add(spotLight);
