@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import Stats  from 'three/examples/jsm/libs/stats.module';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js'
 import { OBJLoader }  from 'three/examples/jsm/loaders/OBJLoader';
-
 /**
  * Initialize the statistics domelement
  * 
@@ -637,7 +636,7 @@ export function setMaterialGroup(material, group) {
 export function computeNormalsGroup(group) {
     if (group instanceof THREE.Mesh) {
         var tempGeom = new THREE.BufferGeometry();
-        tempGeom.fromBufferGeometry(group.geometry)
+        tempGeom = group.geometry.toBufferGeometry();
         tempGeom.computeFaceNormals();
         tempGeom.mergeVertices();
         tempGeom.computeVertexNormals();
